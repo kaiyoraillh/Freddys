@@ -443,9 +443,8 @@
     }
     .menu-item-header {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: .5rem;
+      flex-direction: column;
+      gap: .25rem;
     }
     .menu-item-name {
       font-family: 'Epilogue', sans-serif;
@@ -457,9 +456,8 @@
     .menu-item-price {
       font-family: 'Epilogue', sans-serif;
       font-weight: 900;
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: var(--primary);
-      white-space: nowrap;
     }
     .menu-item-desc {
       font-size: .875rem;
@@ -758,8 +756,7 @@
     }
 
     @media (max-width: 480px) {
-      .menu-grid { grid-template-columns: 1fr; }
-      .menu-grid-bebidas { grid-template-columns: 1fr 1fr; }
+      .menu-grid { grid-template-columns: 1fr 1fr; }
       .extras-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
