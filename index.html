@@ -399,23 +399,47 @@
     }
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 1rem;
+    }
+    .menu-grid-sm {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     }
     .menu-item {
       background: var(--surface-card);
       border: 2px solid var(--on-surface);
       border-radius: 12px;
-      padding: 1.25rem 1.5rem;
+      overflow: hidden;
       box-shadow: 4px 4px 0 var(--primary);
       display: flex;
       flex-direction: column;
-      gap: .5rem;
       transition: transform .12s, box-shadow .12s;
     }
     .menu-item:hover {
       transform: translate(-2px, -2px);
       box-shadow: 6px 6px 0 var(--primary);
+    }
+    .menu-item-img {
+      width: 100%;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: var(--surface-high);
+    }
+    .menu-item-img-sm {
+      aspect-ratio: 4/3;
+    }
+    .menu-item-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .menu-item-body {
+      padding: 1rem 1.25rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+      flex: 1;
     }
     .menu-item-header {
       display: flex;
@@ -453,12 +477,19 @@
       background: var(--surface-card);
       border: 2px solid var(--on-surface);
       border-radius: 10px;
-      padding: .85rem 1.1rem;
+      padding: .65rem 1rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      gap: .75rem;
       box-shadow: 3px 3px 0 var(--primary);
     }
+    .drink-thumb {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .drink-item > div:nth-child(2) { flex: 1; }
     .drink-item-name {
       font-weight: 700;
       font-size: .85rem;
@@ -823,53 +854,74 @@
         <h3 class="display-md menu-cat-title">Hamburguesas</h3>
         <div class="menu-grid">
           <div class="menu-item">
-            <div class="menu-item-header">
-              <span class="menu-item-name">Cheeseburger</span>
-              <span class="menu-item-price">$11.500</span>
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/HAMBURGUESAS/cheeseburger.png" alt="Cheeseburger" loading="lazy" /></div>
+            <div class="menu-item-body">
+              <div class="menu-item-header">
+                <span class="menu-item-name">Cheeseburger</span>
+                <span class="menu-item-price">$11.500</span>
+              </div>
+              <p class="menu-item-desc">Medallón de carne con doble cheddar en pan de papa.</p>
             </div>
-            <p class="menu-item-desc">Medallón de carne con doble cheddar en pan de papa.</p>
           </div>
           <div class="menu-item">
-            <div class="menu-item-header">
-              <span class="menu-item-name">Cheesebacon</span>
-              <span class="menu-item-price">$12.500</span>
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/HAMBURGUESAS/cheesebacon.png" alt="Cheesebacon" loading="lazy" /></div>
+            <div class="menu-item-body">
+              <div class="menu-item-header">
+                <span class="menu-item-name">Cheesebacon</span>
+                <span class="menu-item-price">$12.500</span>
+              </div>
+              <p class="menu-item-desc">Medallón de carne con doble cheddar, panceta ahumada en pan de papa.</p>
             </div>
-            <p class="menu-item-desc">Medallón de carne con doble cheddar, panceta ahumada en pan de papa.</p>
           </div>
           <div class="menu-item">
-            <div class="menu-item-header">
-              <span class="menu-item-name">Marvin</span>
-              <span class="menu-item-price">$15.000</span>
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/HAMBURGUESAS/marvin.png" alt="Marvin" loading="lazy" /></div>
+            <div class="menu-item-body">
+              <div class="menu-item-header">
+                <span class="menu-item-name">Marvin</span>
+                <span class="menu-item-price">$15.000</span>
+              </div>
+              <p class="menu-item-desc">Medallón de carne con doble cheddar, lechuga, tomate, cebolla, salsa Tasty en pan de papa.</p>
             </div>
-            <p class="menu-item-desc">Medallón de carne con doble cheddar, lechuga, tomate, cebolla, salsa Tasty en pan de papa.</p>
           </div>
           <div class="menu-item">
-            <div class="menu-item-header">
-              <span class="menu-item-name">Freddy's OG</span>
-              <span class="menu-item-price">$15.000</span>
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/HAMBURGUESAS/freddys_og.png" alt="Freddy's OG" loading="lazy" /></div>
+            <div class="menu-item-body">
+              <div class="menu-item-header">
+                <span class="menu-item-name">Freddy's OG</span>
+                <span class="menu-item-price">$15.000</span>
+              </div>
+              <p class="menu-item-desc">Medallón de carne con doble cheddar, pepinillo, cebolla, salsa Royal en pan de papa.</p>
             </div>
-            <p class="menu-item-desc">Medallón de carne con doble cheddar, pepinillo, cebolla, salsa Royal en pan de papa.</p>
           </div>
           <div class="menu-item">
-            <div class="menu-item-header">
-              <span class="menu-item-name">Fancy</span>
-              <span class="menu-item-price">$17.000</span>
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/HAMBURGUESAS/fancy.png" alt="Fancy" loading="lazy" /></div>
+            <div class="menu-item-body">
+              <div class="menu-item-header">
+                <span class="menu-item-name">Fancy</span>
+                <span class="menu-item-price">$17.000</span>
+              </div>
+              <p class="menu-item-desc">Doble medallón de carne con doble cheddar, lechuga, pepinillo, cebolla, salsa Bigfred en pan de papa.</p>
             </div>
-            <p class="menu-item-desc">Doble medallón de carne con doble cheddar, lechuga, pepinillo, cebolla, salsa Bigfred en pan de papa.</p>
           </div>
           <div class="menu-item">
-            <div class="menu-item-header">
-              <span class="menu-item-name">Stormer</span>
-              <span class="menu-item-price">$17.000</span>
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/HAMBURGUESAS/stormer.png" alt="Stormer" loading="lazy" /></div>
+            <div class="menu-item-body">
+              <div class="menu-item-header">
+                <span class="menu-item-name">Stormer</span>
+                <span class="menu-item-price">$17.000</span>
+              </div>
+              <p class="menu-item-desc">Medallón de carne con doble cheddar, panceta ahumada, cebolla crispy, salsa Freddy's en pan de papa.</p>
             </div>
-            <p class="menu-item-desc">Medallón de carne con doble cheddar, panceta ahumada, cebolla crispy, salsa Freddy's en pan de papa.</p>
           </div>
           <div class="menu-item">
-            <div class="menu-item-header">
-              <span class="menu-item-name">Daffy</span>
-              <span class="menu-item-price">$15.500</span>
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/HAMBURGUESAS/daffy.png" alt="Daffy" loading="lazy" /></div>
+            <div class="menu-item-body">
+              <div class="menu-item-header">
+                <span class="menu-item-name">Daffy</span>
+                <span class="menu-item-price">$15.500</span>
+              </div>
+              <p class="menu-item-desc">Pollo crispy/grill, lechuga, mayonesa en pan de papa.</p>
             </div>
-            <p class="menu-item-desc">Pollo crispy/grill, lechuga, mayonesa en pan de papa.</p>
           </div>
         </div>
       </div>
@@ -879,32 +931,44 @@
         <h3 class="display-md menu-cat-title">Acompañamientos</h3>
         <div class="menu-grid">
           <div class="menu-item">
-            <div class="menu-item-header">
-              <span class="menu-item-name">French Fries Classic</span>
-              <span class="menu-item-price">$6.000</span>
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/ACOMPAÑAMIENTOS/french_fries_classic.png" alt="French Fries Classic" loading="lazy" /></div>
+            <div class="menu-item-body">
+              <div class="menu-item-header">
+                <span class="menu-item-name">French Fries Classic</span>
+                <span class="menu-item-price">$6.000</span>
+              </div>
+              <p class="menu-item-desc">Papas fritas clásicas.</p>
             </div>
-            <p class="menu-item-desc">Papas fritas clásicas.</p>
           </div>
           <div class="menu-item">
-            <div class="menu-item-header">
-              <span class="menu-item-name">French Fries Freddy's</span>
-              <span class="menu-item-price">$6.000</span>
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/ACOMPAÑAMIENTOS/french_fries_freddys.png" alt="French Fries Freddy's" loading="lazy" /></div>
+            <div class="menu-item-body">
+              <div class="menu-item-header">
+                <span class="menu-item-name">French Fries Freddy's</span>
+                <span class="menu-item-price">$6.000</span>
+              </div>
+              <p class="menu-item-desc">Papas fritas sazonadas al estilo Freddy's.</p>
             </div>
-            <p class="menu-item-desc">Papas fritas sazonadas al estilo Freddy's.</p>
           </div>
           <div class="menu-item">
-            <div class="menu-item-header">
-              <span class="menu-item-name">Nuggets ×6</span>
-              <span class="menu-item-price">$6.000</span>
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/ACOMPAÑAMIENTOS/chicken_nuggets_x6.png" alt="Nuggets x6" loading="lazy" /></div>
+            <div class="menu-item-body">
+              <div class="menu-item-header">
+                <span class="menu-item-name">Nuggets ×6</span>
+                <span class="menu-item-price">$6.000</span>
+              </div>
+              <p class="menu-item-desc">Chicken nuggets ×6 con barbacoa.</p>
             </div>
-            <p class="menu-item-desc">Chicken nuggets ×6 con barbacoa.</p>
           </div>
           <div class="menu-item">
-            <div class="menu-item-header">
-              <span class="menu-item-name">Nuggets ×10</span>
-              <span class="menu-item-price">$10.000</span>
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/ACOMPAÑAMIENTOS/chicken_nuggets_x10.png" alt="Nuggets x10" loading="lazy" /></div>
+            <div class="menu-item-body">
+              <div class="menu-item-header">
+                <span class="menu-item-name">Nuggets ×10</span>
+                <span class="menu-item-price">$10.000</span>
+              </div>
+              <p class="menu-item-desc">Chicken nuggets ×10 con barbacoa + papas fritas.</p>
             </div>
-            <p class="menu-item-desc">Chicken nuggets ×10 con barbacoa + papas fritas.</p>
           </div>
         </div>
       </div>
@@ -912,69 +976,46 @@
       <!-- Bebidas -->
       <div>
         <h3 class="display-md menu-cat-title">Bebidas</h3>
-        <div class="menu-drinks">
-          <div class="drink-item">
-            <div>
-              <div class="drink-item-name">Coca-Cola</div>
-              <div class="drink-item-detail">354ml</div>
-            </div>
-            <div class="drink-item-price">$3.600</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/BEBIDAS/coca.png" alt="Coca-Cola" loading="lazy" /></div>
+            <div class="menu-item-body"><div class="menu-item-header"><span class="menu-item-name">Coca-Cola</span><span class="menu-item-price">$3.600</span></div><p class="menu-item-desc">354ml</p></div>
           </div>
-          <div class="drink-item">
-            <div>
-              <div class="drink-item-name">Coca-Cola Zero</div>
-              <div class="drink-item-detail">Sin azúcar · 354ml</div>
-            </div>
-            <div class="drink-item-price">$3.600</div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/BEBIDAS/coca zero.png" alt="Coca-Cola Zero" loading="lazy" /></div>
+            <div class="menu-item-body"><div class="menu-item-header"><span class="menu-item-name">Coca-Cola Zero</span><span class="menu-item-price">$3.600</span></div><p class="menu-item-desc">Sin azúcar · 354ml</p></div>
           </div>
-          <div class="drink-item">
-            <div>
-              <div class="drink-item-name">Sprite</div>
-              <div class="drink-item-detail">354ml</div>
-            </div>
-            <div class="drink-item-price">$3.600</div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/BEBIDAS/sprite.png" alt="Sprite" loading="lazy" /></div>
+            <div class="menu-item-body"><div class="menu-item-header"><span class="menu-item-name">Sprite</span><span class="menu-item-price">$3.600</span></div><p class="menu-item-desc">354ml</p></div>
           </div>
-          <div class="drink-item">
-            <div>
-              <div class="drink-item-name">Sprite Zero</div>
-              <div class="drink-item-detail">Sin azúcar · 354ml</div>
-            </div>
-            <div class="drink-item-price">$3.600</div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/BEBIDAS/sprite zero.png" alt="Sprite Zero" loading="lazy" /></div>
+            <div class="menu-item-body"><div class="menu-item-header"><span class="menu-item-name">Sprite Zero</span><span class="menu-item-price">$3.600</span></div><p class="menu-item-desc">Sin azúcar · 354ml</p></div>
           </div>
-          <div class="drink-item">
-            <div>
-              <div class="drink-item-name">Fanta Zero</div>
-              <div class="drink-item-detail">354ml</div>
-            </div>
-            <div class="drink-item-price">$3.600</div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/BEBIDAS/fanta.png" alt="Fanta Zero" loading="lazy" /></div>
+            <div class="menu-item-body"><div class="menu-item-header"><span class="menu-item-name">Fanta Zero</span><span class="menu-item-price">$3.600</span></div><p class="menu-item-desc">354ml</p></div>
           </div>
-          <div class="drink-item">
-            <div>
-              <div class="drink-item-name">Schweppes Tónica</div>
-              <div class="drink-item-detail">310ml</div>
-            </div>
-            <div class="drink-item-price">$3.600</div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/BEBIDAS/schweeps tonica.png" alt="Schweppes Tónica" loading="lazy" /></div>
+            <div class="menu-item-body"><div class="menu-item-header"><span class="menu-item-name">Schweppes Tónica</span><span class="menu-item-price">$3.600</span></div><p class="menu-item-desc">310ml</p></div>
           </div>
-          <div class="drink-item">
-            <div>
-              <div class="drink-item-name">Schweppes Pomelo</div>
-              <div class="drink-item-detail">Zero · 310ml</div>
-            </div>
-            <div class="drink-item-price">$3.600</div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/BEBIDAS/schweppes pomelo.png" alt="Schweppes Pomelo" loading="lazy" /></div>
+            <div class="menu-item-body"><div class="menu-item-header"><span class="menu-item-name">Schweppes Pomelo</span><span class="menu-item-price">$3.600</span></div><p class="menu-item-desc">Zero · 310ml</p></div>
           </div>
-          <div class="drink-item">
-            <div>
-              <div class="drink-item-name">Agua Villavicencio</div>
-              <div class="drink-item-detail">500ml</div>
-            </div>
-            <div class="drink-item-price">$3.000</div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/BEBIDAS/agua.png" alt="Agua Villavicencio" loading="lazy" /></div>
+            <div class="menu-item-body"><div class="menu-item-header"><span class="menu-item-name">Agua Villavicencio</span><span class="menu-item-price">$3.000</span></div><p class="menu-item-desc">500ml</p></div>
           </div>
-          <div class="drink-item">
-            <div>
-              <div class="drink-item-name">Agua con gas Villavicencio</div>
-              <div class="drink-item-detail">500ml</div>
-            </div>
-            <div class="drink-item-price">$3.000</div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/BEBIDAS/agua con gas.png" alt="Agua con gas" loading="lazy" /></div>
+            <div class="menu-item-body"><div class="menu-item-header"><span class="menu-item-name">Agua con gas Villavicencio</span><span class="menu-item-price">$3.000</span></div><p class="menu-item-desc">500ml</p></div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="assets/Imagenes Freddys/MENU/BEBIDAS/blue moon.png" alt="Blue Moon" loading="lazy" /></div>
+            <div class="menu-item-body"><div class="menu-item-header"><span class="menu-item-name">Blue Moon Lata</span><span class="menu-item-price">$6.600</span></div><p class="menu-item-desc">473ml</p></div>
           </div>
         </div>
       </div>
@@ -991,7 +1032,8 @@
           <div class="extra-item"><span class="extra-item-name">Pepinillos</span><span class="extra-item-price">$800</span></div>
           <div class="extra-item"><span class="extra-item-name">Panceta Ahumada</span><span class="extra-item-price">$1.500</span></div>
           <div class="extra-item"><span class="extra-item-name">Lechuga</span><span class="extra-item-price">$500</span></div>
-          <div class="extra-item"><span class="extra-item-name">Medallón</span><span class="extra-item-price">$3.000</span></div>
+          <div class="extra-item"><span class="extra-item-name">Medallón de Carne</span><span class="extra-item-price">$3.000</span></div>
+          <div class="extra-item"><span class="extra-item-name">Medallón de Pollo</span><span class="extra-item-price">$3.000</span></div>
           <div class="extra-item"><span class="extra-item-name">Sal Especial</span><span class="extra-item-price">$500</span></div>
           <div class="extra-item"><span class="extra-item-name">Cebolla</span><span class="extra-item-price">$300</span></div>
         </div>
