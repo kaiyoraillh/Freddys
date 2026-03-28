@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FREDDY'S — Pretty Patties</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;900&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --primary:        #0028d0;
+      --primary-light:  #1b3fff;
+      --surface:        #fcf9f2;
+      --surface-card:   #ffffff;
+      --surface-high:   #f0ede6;
+      --on-primary:     #ffffff;
+      --on-surface:     #0d0d0d;
+      --error:          #891b00;
+      --checker-size:   32px;
+    }
+
+    /* ── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--surface);
+      color: var(--on-surface);
+      font-family: 'Work Sans', sans-serif;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── TYPOGRAPHY ─────────────────────────────────────── */
+    .display-xl {
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: .92;
+      letter-spacing: -.02em;
+    }
+    .display-lg {
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: .95;
+      letter-spacing: -.01em;
+    }
+    .display-md {
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .label {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .75rem;
+    }
+
+    /* ── CHECKERBOARD ───────────────────────────────────── */
+    .checker {
+      width: 100%;
+      height: 40px;
+      background-image:
+        repeating-conic-gradient(var(--primary) 0% 25%, var(--surface-high) 0% 50%);
+      background-size: var(--checker-size) var(--checker-size);
+      flex-shrink: 0;
+    }
+    .checker-sm {
+      height: 24px;
+      --checker-size: 20px;
+    }
+
+    /* ── NAVBAR ─────────────────────────────────────────── */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--primary);
+      color: var(--on-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .75rem 2rem;
+      border-bottom: 4px solid var(--on-surface);
+    }
+    .navbar-logo {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      text-decoration: none;
+    }
+    .navbar-logo img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+    .navbar-logo-text {
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: -.01em;
+      color: var(--on-primary);
+    }
+    .navbar-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .navbar-links a {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-size: .85rem;
+      color: var(--on-primary);
+      opacity: .85;
+      transition: opacity .15s;
+      padding: .25rem 0;
+      border-bottom: 2px solid transparent;
+    }
+    .navbar-links a:hover {
+      opacity: 1;
+      border-bottom-color: var(--on-primary);
+    }
+    .navbar-toggle {
+      display: none;
+      background: none;
+      border: 2px solid var(--on-primary);
+      color: var(--on-primary);
+      padding: .4rem .6rem;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .navbar-toggle svg { display: block; }
+
+    /* ── HERO ───────────────────────────────────────────── */
+    .hero {
+      background: var(--surface);
+      position: relative;
+      overflow: hidden;
+      min-height: 88vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 2rem;
+      padding: 4rem 2rem 3rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .hero-text { position: relative; z-index: 2; }
+    .hero-tag {
+      display: inline-block;
+      background: var(--primary);
+      color: var(--on-primary);
+      padding: .3rem .9rem;
+      margin-bottom: 1.25rem;
+    }
+    .hero-headline {
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      margin-bottom: 1rem;
+      color: var(--on-surface);
+    }
+    .hero-headline span {
+      color: var(--primary);
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: #444;
+      max-width: 42ch;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+    .hero-locs {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      margin-bottom: 2rem;
+    }
+    .hero-loc-card {
+      background: var(--surface-card);
+      border: 2px solid var(--on-surface);
+      border-radius: 12px;
+      padding: .9rem 1.1rem;
+      box-shadow: 4px 4px 0 var(--primary);
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .hero-loc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .5rem;
+    }
+    .hero-loc-name {
+      font-size: .95rem;
+      line-height: 1.1;
+    }
+    .hero-loc-info {
+      font-size: .8rem;
+      color: #555;
+      line-height: 1.4;
+    }
+    .hero-loc-actions {
+      display: flex;
+      gap: .5rem;
+    }
+    .hero-loc-actions .btn-loc {
+      padding: .45rem .8rem;
+      font-size: .72rem;
+      border-radius: 8px;
+    }
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-size: .9rem;
+      padding: .85rem 1.75rem;
+      border-radius: 12px;
+      border: 2px solid var(--on-surface);
+      cursor: pointer;
+      transition: transform .12s, box-shadow .12s;
+    }
+    .btn:hover { transform: scale(1.04); }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+      box-shadow: 4px 4px 0 var(--on-surface);
+    }
+    .btn-primary:hover { box-shadow: 6px 6px 0 var(--on-surface); }
+    .btn-secondary {
+      background: var(--surface-card);
+      color: var(--on-surface);
+      box-shadow: 4px 4px 0 var(--primary);
+    }
+    .btn-secondary:hover { box-shadow: 6px 6px 0 var(--primary); }
+
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      position: relative;
+    }
+    .hero-mascot-wrap {
+      position: relative;
+      width: min(420px, 90%);
+    }
+    .hero-mascot-wrap img {
+      width: 100%;
+      filter: drop-shadow(8px 8px 0 rgba(0,40,208,.35));
+      animation: bobble 3s ease-in-out infinite;
+    }
+    @keyframes bobble {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+    .hero-badge {
+      position: absolute;
+      bottom: 16%;
+      right: -10%;
+      background: var(--primary);
+      color: var(--on-primary);
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: 3px solid var(--on-surface);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 4px 4px 0 var(--on-surface);
+      padding: .5rem;
+      animation: spin-badge 12s linear infinite;
+    }
+    @keyframes spin-badge {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .hero-badge-inner { animation: spin-badge 12s linear infinite reverse; }
+    .hero-badge-price {
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 900;
+      font-size: 1rem;
+      line-height: 1;
+    }
+    .hero-badge-label {
+      font-size: .6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      opacity: .9;
+    }
+    .hero-badge-sub {
+      font-size: .55rem;
+      text-transform: uppercase;
+      opacity: .8;
+      margin-top: 2px;
+    }
+
+    /* ── MARQUEE ────────────────────────────────────────── */
+    .marquee-wrap {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-top: 3px solid var(--on-surface);
+      border-bottom: 3px solid var(--on-surface);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: .75rem 0;
+    }
+    .marquee-track {
+      display: inline-flex;
+      gap: 0;
+      animation: marquee 18s linear infinite;
+    }
+    .marquee-item {
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      padding: 0 2.5rem;
+    }
+    .marquee-dot {
+      opacity: .5;
+      font-size: 1.2rem;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── SECTION SHELL ──────────────────────────────────── */
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 3rem;
+    }
+    .section-tag {
+      background: var(--primary);
+      color: var(--on-primary);
+      padding: .25rem .75rem;
+      margin-bottom: .75rem;
+      font-size: .75rem;
+    }
+    .section-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+    }
+
+    /* ── MENU ───────────────────────────────────────────── */
+    .menu-bg {
+      background: var(--surface-high);
+    }
+    .menu-categories {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+    .menu-cat-title {
+      font-size: 1.6rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .menu-cat-title::after {
+      content: '';
+      flex: 1;
+      height: 3px;
+      background: var(--primary);
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .menu-item {
+      background: var(--surface-card);
+      border: 2px solid var(--on-surface);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 4px 4px 0 var(--primary);
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      transition: transform .12s, box-shadow .12s;
+    }
+    .menu-item:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--primary);
+    }
+    .menu-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: .5rem;
+    }
+    .menu-item-name {
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 900;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+    .menu-item-price {
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+    .menu-item-desc {
+      font-size: .875rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    /* Drinks grid — compact 2-col */
+    .menu-drinks {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: .75rem;
+    }
+    .drink-item {
+      background: var(--surface-card);
+      border: 2px solid var(--on-surface);
+      border-radius: 10px;
+      padding: .85rem 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 3px 3px 0 var(--primary);
+    }
+    .drink-item-name {
+      font-weight: 700;
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .drink-item-detail {
+      font-size: .75rem;
+      color: #666;
+    }
+    .drink-item-price {
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 900;
+      font-size: 1rem;
+      color: var(--primary);
+    }
+
+    /* Extras compact row list */
+    .extras-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: .6rem;
+    }
+    .extra-item {
+      background: var(--surface-card);
+      border: 2px solid var(--on-surface);
+      border-radius: 8px;
+      padding: .65rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 2px 2px 0 var(--primary-light);
+    }
+    .extra-item-name { font-weight: 600; font-size: .82rem; text-transform: uppercase; letter-spacing: .04em; }
+    .extra-item-price { font-family: 'Epilogue', sans-serif; font-weight: 900; font-size: .9rem; color: var(--primary); }
+
+    .menu-note {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--primary);
+      color: var(--on-primary);
+      padding: .5rem 1.25rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      font-size: .85rem;
+      font-weight: 600;
+    }
+
+    /* ── GALLERY ────────────────────────────────────────── */
+    .gallery-bg { background: var(--surface); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .gallery-item {
+      aspect-ratio: 1;
+      overflow: hidden;
+      border: 3px solid var(--on-surface);
+      border-radius: 12px;
+      box-shadow: 5px 5px 0 var(--primary);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .3s;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+
+    /* ── LOCATIONS ──────────────────────────────────────── */
+    .locations-bg { background: var(--surface-high); }
+    .locations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .location-card {
+      background: var(--surface-card);
+      border: 3px solid var(--on-surface);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 6px 6px 0 var(--primary);
+    }
+    .location-card-header {
+      background: var(--primary);
+      color: var(--on-primary);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .location-name { font-size: 1.4rem; line-height: 1.1; }
+    .location-badge {
+      background: var(--on-primary);
+      color: var(--primary);
+      font-size: .65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      padding: .25rem .6rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .location-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .location-row {
+      display: flex;
+      gap: .75rem;
+      align-items: flex-start;
+    }
+    .location-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      color: var(--on-primary);
+      border-radius: 8px;
+      border: 2px solid var(--on-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .location-row-label { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #888; margin-bottom: .2rem; }
+    .location-row-value { font-size: .9rem; font-weight: 500; line-height: 1.4; }
+    .location-row-value a { color: var(--primary); font-weight: 700; }
+    .location-row-value a:hover { text-decoration: underline; }
+    .location-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+      padding: 0 1.5rem 1.5rem;
+    }
+    .btn-loc {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      padding: .75rem 1rem;
+      border-radius: 10px;
+      border: 2px solid var(--on-surface);
+      font-weight: 700;
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      cursor: pointer;
+      transition: transform .1s, box-shadow .1s;
+    }
+    .btn-loc:hover { transform: translate(-1px,-1px); }
+    .btn-loc-whatsapp {
+      background: #25d366;
+      color: #fff;
+      box-shadow: 3px 3px 0 var(--on-surface);
+    }
+    .btn-loc-maps {
+      background: var(--surface);
+      color: var(--on-surface);
+      box-shadow: 3px 3px 0 var(--primary);
+    }
+
+    /* ── FOOTER ─────────────────────────────────────────── */
+    footer {
+      background: var(--on-surface);
+      color: var(--surface);
+      padding: 3rem 2rem 2rem;
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 2rem;
+      align-items: start;
+    }
+    .footer-logo img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+    .footer-brand-name {
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 900;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      margin-top: .5rem;
+    }
+    .footer-tagline {
+      font-size: .85rem;
+      opacity: .6;
+      margin-top: .25rem;
+    }
+    .footer-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .footer-col-title {
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .75rem;
+      opacity: .5;
+      margin-bottom: .75rem;
+    }
+    .footer-col a, .footer-col p {
+      display: block;
+      font-size: .88rem;
+      opacity: .8;
+      margin-bottom: .4rem;
+      line-height: 1.5;
+    }
+    .footer-col a:hover { opacity: 1; text-decoration: underline; }
+    .footer-social a {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      padding: .6rem 1rem;
+      border-radius: 8px;
+      font-size: .85rem;
+      font-weight: 600;
+      transition: background .15s;
+    }
+    .footer-social a:hover { background: rgba(255,255,255,.2); }
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 2rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: .78rem;
+      opacity: .5;
+    }
+
+    /* ── MOBILE MENU STATE ──────────────────────────────── */
+    @media (max-width: 768px) {
+      .navbar-links {
+        display: none;
+        flex-direction: column;
+        gap: .25rem;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--primary);
+        padding: 1rem 2rem;
+        border-bottom: 3px solid var(--on-surface);
+      }
+      .navbar-links.open { display: flex; }
+      .navbar { position: relative; }
+      .navbar-toggle { display: flex; align-items: center; justify-content: center; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding: 3rem 1.25rem 2rem;
+        text-align: center;
+      }
+      .hero-text { order: 2; }
+      .hero-visual { order: 1; }
+      .hero-mascot-wrap { width: min(260px, 70vw); margin: 0 auto; }
+      .hero-ctas { justify-content: center; }
+      .hero-locs { max-width: 420px; margin-left: auto; margin-right: auto; }
+      .hero-badge { right: 0; bottom: 10%; width: 90px; height: 90px; }
+      .hero-badge-price { font-size: .85rem; }
+
+      .section { padding: 3.5rem 1.25rem; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-links { grid-template-columns: 1fr; }
+      .footer-bottom { justify-content: center; text-align: center; }
+
+      .locations-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .menu-grid { grid-template-columns: 1fr; }
+      .extras-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body id="top">
+
+<!-- ── NAVBAR ──────────────────────────────────────────── -->
+<nav class="navbar">
+  <a href="#top" class="navbar-logo">
+    <img src="assets/Imagenes Freddys/LOGO FREDDYS PNG.png" alt="Freddy's logo" />
+    <span class="navbar-logo-text">Freddy's</span>
+  </a>
+  <button class="navbar-toggle" id="navToggle" aria-label="Menú">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <line x1="2" y1="5"  x2="18" y2="5"/>
+      <line x1="2" y1="10" x2="18" y2="10"/>
+      <line x1="2" y1="15" x2="18" y2="15"/>
+    </svg>
+  </button>
+  <ul class="navbar-links" id="navLinks">
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#sucursales">Sucursales</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────── -->
+<section>
+  <div class="hero">
+    <div class="hero-text">
+      <span class="label hero-tag">Pretty Patties</span>
+      <h1 class="display-xl hero-headline">
+        The&nbsp;best<br /><span>burger</span><br />in town
+      </h1>
+      <div class="hero-ctas">
+        <a href="#menu" class="btn btn-primary">Ver Menú</a>
+        <a href="#sucursales" class="btn btn-secondary">Encontrarnos</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-mascot-wrap">
+        <img src="assets/Imagenes Freddys/PERSONAJE FREDDYS.png" alt="Freddy la hamburgesa" />
+        <div class="hero-badge">
+          <div class="hero-badge-inner">
+            <div class="hero-badge-price">$11.500</div>
+            <div class="hero-badge-label">desde</div>
+            <div class="hero-badge-sub">incl. papas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MARQUEE ─────────────────────────────────────────── -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <!-- duplicated for seamless loop -->
+    <span class="marquee-item">Freddy's</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Pretty Patties</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Made Fresh</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Doble Cheddar</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Pan de Papa</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Freddy's Way</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Freddy's</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Pretty Patties</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Made Fresh</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Doble Cheddar</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Pan de Papa</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Freddy's Way</span><span class="marquee-dot">✦</span>
+  </div>
+</div>
+
+<div class="checker"></div>
+
+<!-- ── MENU ────────────────────────────────────────────── -->
+<div class="menu-bg" id="menu">
+  <div class="section">
+    <div class="section-header">
+      <span class="label section-tag">Carta</span>
+      <h2 class="display-lg section-title">Nuestro&nbsp;Menú</h2>
+    </div>
+
+    <div class="menu-note">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Todas las hamburguesas incluyen papas fritas
+    </div>
+
+    <div class="menu-categories">
+
+      <!-- Hamburguesas -->
+      <div>
+        <h3 class="display-md menu-cat-title">Hamburguesas</h3>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-header">
+              <span class="menu-item-name">Cheeseburger</span>
+              <span class="menu-item-price">$11.500</span>
+            </div>
+            <p class="menu-item-desc">Medallón de carne con doble cheddar en pan de papa.</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-header">
+              <span class="menu-item-name">Cheesebacon</span>
+              <span class="menu-item-price">$12.500</span>
+            </div>
+            <p class="menu-item-desc">Medallón de carne con doble cheddar, panceta ahumada en pan de papa.</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-header">
+              <span class="menu-item-name">Marvin</span>
+              <span class="menu-item-price">$15.000</span>
+            </div>
+            <p class="menu-item-desc">Medallón de carne con doble cheddar, lechuga, tomate, cebolla, salsa Tasty en pan de papa.</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-header">
+              <span class="menu-item-name">Freddy's OG</span>
+              <span class="menu-item-price">$15.000</span>
+            </div>
+            <p class="menu-item-desc">Medallón de carne con doble cheddar, pepinillo, cebolla, salsa Royal en pan de papa.</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-header">
+              <span class="menu-item-name">Fancy</span>
+              <span class="menu-item-price">$17.000</span>
+            </div>
+            <p class="menu-item-desc">Doble medallón de carne con doble cheddar, lechuga, pepinillo, cebolla, salsa Bigfred en pan de papa.</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-header">
+              <span class="menu-item-name">Stormer</span>
+              <span class="menu-item-price">$17.000</span>
+            </div>
+            <p class="menu-item-desc">Medallón de carne con doble cheddar, panceta ahumada, cebolla crispy, salsa Freddy's en pan de papa.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Acompañamientos -->
+      <div>
+        <h3 class="display-md menu-cat-title">Acompañamientos</h3>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-header">
+              <span class="menu-item-name">French Fries Classic</span>
+              <span class="menu-item-price">$6.000</span>
+            </div>
+            <p class="menu-item-desc">Papas fritas clásicas.</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-header">
+              <span class="menu-item-name">French Fries Freddy's</span>
+              <span class="menu-item-price">$6.000</span>
+            </div>
+            <p class="menu-item-desc">Papas fritas sazonadas al estilo Freddy's.</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-header">
+              <span class="menu-item-name">Nuggets ×6</span>
+              <span class="menu-item-price">$6.000</span>
+            </div>
+            <p class="menu-item-desc">Chicken nuggets ×6 con barbacoa.</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-header">
+              <span class="menu-item-name">Nuggets ×10</span>
+              <span class="menu-item-price">$10.000</span>
+            </div>
+            <p class="menu-item-desc">Chicken nuggets ×10 con barbacoa + papas fritas.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bebidas -->
+      <div>
+        <h3 class="display-md menu-cat-title">Bebidas</h3>
+        <div class="menu-drinks">
+          <div class="drink-item">
+            <div>
+              <div class="drink-item-name">Coca-Cola</div>
+              <div class="drink-item-detail">354ml</div>
+            </div>
+            <div class="drink-item-price">$3.600</div>
+          </div>
+          <div class="drink-item">
+            <div>
+              <div class="drink-item-name">Coca-Cola Zero</div>
+              <div class="drink-item-detail">Sin azúcar · 354ml</div>
+            </div>
+            <div class="drink-item-price">$3.600</div>
+          </div>
+          <div class="drink-item">
+            <div>
+              <div class="drink-item-name">Sprite</div>
+              <div class="drink-item-detail">Lima-limón · 354ml</div>
+            </div>
+            <div class="drink-item-price">$3.600</div>
+          </div>
+          <div class="drink-item">
+            <div>
+              <div class="drink-item-name">Sprite Zero</div>
+              <div class="drink-item-detail">Sin azúcar · 354ml</div>
+            </div>
+            <div class="drink-item-price">$3.600</div>
+          </div>
+          <div class="drink-item">
+            <div>
+              <div class="drink-item-name">Fanta Zero</div>
+              <div class="drink-item-detail">Naranja · 354ml</div>
+            </div>
+            <div class="drink-item-price">$3.600</div>
+          </div>
+          <div class="drink-item">
+            <div>
+              <div class="drink-item-name">Schweppes Tónica</div>
+              <div class="drink-item-detail">310ml</div>
+            </div>
+            <div class="drink-item-price">$3.600</div>
+          </div>
+          <div class="drink-item">
+            <div>
+              <div class="drink-item-name">Schweppes Pomelo</div>
+              <div class="drink-item-detail">Zero · 310ml</div>
+            </div>
+            <div class="drink-item-price">$3.600</div>
+          </div>
+          <div class="drink-item">
+            <div>
+              <div class="drink-item-name">Agua Villavicencio</div>
+              <div class="drink-item-detail">Sin gas</div>
+            </div>
+            <div class="drink-item-price">$3.000</div>
+          </div>
+          <div class="drink-item">
+            <div>
+              <div class="drink-item-name">Agua Con Gas</div>
+              <div class="drink-item-detail">Villavicencio</div>
+            </div>
+            <div class="drink-item-price">$3.000</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Adicionales -->
+      <div>
+        <h3 class="display-md menu-cat-title">Adicionales</h3>
+        <div class="extras-grid">
+          <div class="extra-item"><span class="extra-item-name">Cebolla Crispy</span><span class="extra-item-price">$1.000</span></div>
+          <div class="extra-item"><span class="extra-item-name">Tomate</span><span class="extra-item-price">$500</span></div>
+          <div class="extra-item"><span class="extra-item-name">Salsa</span><span class="extra-item-price">$500</span></div>
+          <div class="extra-item"><span class="extra-item-name">Cheddar</span><span class="extra-item-price">$1.000</span></div>
+          <div class="extra-item"><span class="extra-item-name">Pan Sin TACC</span><span class="extra-item-price">$3.500</span></div>
+          <div class="extra-item"><span class="extra-item-name">Pepinillos</span><span class="extra-item-price">$800</span></div>
+          <div class="extra-item"><span class="extra-item-name">Panceta Ahumada</span><span class="extra-item-price">$1.500</span></div>
+          <div class="extra-item"><span class="extra-item-name">Lechuga</span><span class="extra-item-price">$500</span></div>
+          <div class="extra-item"><span class="extra-item-name">Medallón</span><span class="extra-item-price">$3.000</span></div>
+          <div class="extra-item"><span class="extra-item-name">Sal Especial</span><span class="extra-item-price">$500</span></div>
+          <div class="extra-item"><span class="extra-item-name">Cebolla</span><span class="extra-item-price">$300</span></div>
+        </div>
+      </div>
+
+    </div><!-- /menu-categories -->
+  </div>
+</div>
+
+<div class="checker checker-sm"></div>
+
+<!-- ── GALLERY ──────────────────────────────────────────── -->
+<div class="gallery-bg" id="galeria">
+  <div class="section">
+    <div class="section-header">
+      <span class="label section-tag">Fotos</span>
+      <h2 class="display-lg section-title">Galería</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="assets/Imagenes Freddys/freddys.ar_1768319700_3809264253526936251_45384032310.jpg" alt="Freddy's" loading="lazy" /></div>
+      <div class="gallery-item"><img src="assets/Imagenes Freddys/freddys.ar_1769266812_3817209143413807080_45384032310.jpg" alt="Freddy's" loading="lazy" /></div>
+      <div class="gallery-item"><img src="assets/Imagenes Freddys/freddys.ar_1765492500_3785548026564649083_45384032310.jpg" alt="Freddy's" loading="lazy" /></div>
+      <div class="gallery-item"><img src="assets/Imagenes Freddys/freddys.ar_1764715565_3779030521544182868_45384032310.jpg" alt="Freddy's" loading="lazy" /></div>
+      <div class="gallery-item"><img src="assets/Imagenes Freddys/freddys.ar_1755960300_3705586394073483220_45384032310.jpg" alt="Freddy's" loading="lazy" /></div>
+      <div class="gallery-item"><img src="assets/Imagenes Freddys/freddys.ar_1751380500_3667168387013887158_45384032310.jpg" alt="Freddy's" loading="lazy" /></div>
+      <div class="gallery-item"><img src="assets/Imagenes Freddys/freddys.ar_1757343900_3717192678481170988_45384032310.jpg" alt="Freddy's" loading="lazy" /></div>
+      <div class="gallery-item"><img src="assets/Imagenes Freddys/freddys.ar_1750693703_3661406620631516775_45384032310.jpg" alt="Freddy's" loading="lazy" /></div>
+    </div>
+  </div>
+</div>
+
+<div class="checker"></div>
+
+<!-- ── LOCATIONS ────────────────────────────────────────── -->
+<div class="locations-bg" id="sucursales">
+  <div class="section">
+    <div class="section-header">
+      <span class="label section-tag">Dónde encontrarnos</span>
+      <h2 class="display-lg section-title">Sucursales</h2>
+    </div>
+    <div class="locations-grid">
+
+      <!-- Vila Terra -->
+      <div class="location-card">
+        <div class="location-card-header">
+          <h3 class="display-md location-name">Vila Terra<br />Center</h3>
+          <span class="location-badge">Nueva sede</span>
+        </div>
+        <div class="location-body">
+          <div class="location-row">
+            <div class="location-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <div class="location-row-label">Horario</div>
+              <div class="location-row-value">Mié a lun: 12:00–15:30 y 19:30–23:00<br /><strong>Martes: Cerrado</strong></div>
+            </div>
+          </div>
+          <div class="location-row">
+            <div class="location-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="location-row-label">Email</div>
+              <div class="location-row-value"><a href="mailto:freddyssantrack@gmail.com">freddyssantrack@gmail.com</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="location-actions">
+          <a href="https://api.whatsapp.com/send/?phone=5491124919031" target="_blank" rel="noopener" class="btn-loc btn-loc-whatsapp">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.557 4.117 1.535 5.846L.057 23.535a.5.5 0 0 0 .609.61l5.79-1.474A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.659-.525-5.17-1.437l-.369-.217-3.832.976.997-3.748-.237-.387A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            WhatsApp
+          </a>
+          <a href="https://maps.app.goo.gl/jessCMaSQMrZEFd49" target="_blank" rel="noopener" class="btn-loc btn-loc-maps">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Ver mapa
+          </a>
+        </div>
+      </div>
+
+      <!-- Euskal Herria -->
+      <div class="location-card">
+        <div class="location-card-header">
+          <h3 class="display-md location-name">Euskal Herria<br />Plaza</h3>
+        </div>
+        <div class="location-body">
+          <div class="location-row">
+            <div class="location-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <div class="location-row-label">Horario</div>
+              <div class="location-row-value">Todos los días: 12:00–15:30 y 19:30–23:00</div>
+            </div>
+          </div>
+          <div class="location-row">
+            <div class="location-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="location-row-label">Email</div>
+              <div class="location-row-value"><a href="mailto:freddyseuskal@gmail.com">freddyseuskal@gmail.com</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="location-actions">
+          <a href="https://api.whatsapp.com/send/?phone=5491137800000" target="_blank" rel="noopener" class="btn-loc btn-loc-whatsapp">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.557 4.117 1.535 5.846L.057 23.535a.5.5 0 0 0 .609.61l5.79-1.474A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.659-.525-5.17-1.437l-.369-.217-3.832.976.997-3.748-.237-.387A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            WhatsApp
+          </a>
+          <a href="https://maps.app.goo.gl/MTGy2HraxzLXZdgF9" target="_blank" rel="noopener" class="btn-loc btn-loc-maps">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Ver mapa
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="checker checker-sm"></div>
+
+<!-- ── FOOTER ───────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <img src="assets/Imagenes Freddys/LOGO FREDDYS PNG.png" alt="Freddy's logo" />
+      </div>
+      <div class="footer-brand-name">Freddy's</div>
+      <div class="footer-tagline">Pretty Patties</div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <div class="footer-col-title">Navegar</div>
+        <a href="#menu">Menú</a>
+        <a href="#galeria">Galería</a>
+        <a href="#sucursales">Sucursales</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contacto</div>
+        <a href="mailto:freddyssantrack@gmail.com">Vila Terra</a>
+        <a href="mailto:freddyseuskal@gmail.com">Euskal Herria</a>
+      </div>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/freddys.ar/" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        @freddys.ar
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Freddy's. Todos los derechos reservados.</span>
+    <span>Made fresh at Freddy's way</span>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const toggle = document.getElementById('navToggle');
+  const links  = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+</script>
+
+</body>
+</html>
